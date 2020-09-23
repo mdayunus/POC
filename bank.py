@@ -115,10 +115,13 @@ def main():
     new_result.to_csv(f'{filename}.csv', index=False)
 
     # topic 4
-    noofdup = df2[['Account No', 'DATE', 'TransactionType', 'TransactionAmount']].loc[df2[[
-        'Account No', 'DATE', 'TransactionType', 'TransactionAmount']].duplicated()]
 
-    noofdup.to_csv('duplicatedTransaction.csv', index=False)
+    df2['count'] = 1
+    fltr = df[['Account No', 'DATE', 'TransactionType',
+               'TransactionAmount']].duplicated
+    dupdf = df.loc[fltr].groupby(['Account No']).sum()
+    dupdf['count'].to_csv('account&count.csv')
+    df2.drop(columns=['count'])
 
     # topic 5
     start = '2019-03-05'
