@@ -116,12 +116,14 @@ def main():
 
     # topic 4
 
-    df2['count'] = 1
-    fltr = df[['Account No', 'DATE', 'TransactionType',
-               'TransactionAmount']].duplicated
-    dupdf = df.loc[fltr].groupby(['Account No']).sum()
-    dupdf['count'].to_csv('account&count.csv')
-    df2.drop(columns=['count'])
+    df3 = pd.DataFrame()
+    df3[['Account No', 'DATE', 'TransactionType', 'TransactionAmount']
+        ] = df2[['Account No', 'DATE', 'TransactionType', 'TransactionAmount']]
+    df3['count'] = 1
+    fltr = df3.duplicated()
+    topic4 = df3.loc[fltr].groupby(
+        ['Account No', 'DATE', 'TransactionType', 'TransactionAmount']).sum()
+    topic4.to_csv('topic4.csv')
 
     # topic 5
     start = '2019-03-05'
@@ -129,6 +131,8 @@ def main():
     newdata = aggondate(start, end, df2, 'DATE', ['Account No'], ['DEPOSIT AMT', 'WITHDRAWAL AMT']).rename(
         columns={'DEPOSIT AMT': 'TOTAL DEPOSIT', 'WITHDRAWAL AMT': 'TOTAL WITHDRAWAL'})
     newdata.to_csv('agg.csv')
+
+    print('completed...')
 
 
 if __name__ == '__main__':
