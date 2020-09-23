@@ -77,7 +77,7 @@ def main():
 
     # topic 1.3
     df['TransactionType'] = df[['WITHDRAWAL AMT', 'DEPOSIT AMT']].apply(
-        lambda row: newtransactioncolumn(row, val1='CR', val2='DR'), axis=1)
+        lambda row: newtransactioncolumn(row, val1='DR', val2='CR'), axis=1)
 
     # topic 1.4
     df[['Account No', 'DATE', 'TRANSACTION DETAILS', 'CHQ.NO.', 'VALUE DATE', 'WITHDRAWAL AMT', 'DEPOSIT AMT',
